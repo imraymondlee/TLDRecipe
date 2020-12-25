@@ -2,9 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const requestPage = function(url){
+import cheerio from 'react-native-cheerio';
+
+const requestPage = function(url) {
   console.log('requestPage: ', url);
-  
+
   return fetch('https://cors-anywhere.herokuapp.com/' + url)
     .then((response) => response.text())
     .then((data) => {
@@ -15,8 +17,23 @@ const requestPage = function(url){
     });
 }
 
+const extractStructuredData = function(data) {
+  console.log('pageData: ', data);
+  const $ = cheerio.load(data);
+  return $('script[type="application/ld+json"]').text();
+}
+
 export default function App() {
-  requestPage('https://google.ca');
+  let sData = requestPage('https://www.gimmesomeoven.com/baked-chicken-breast/')
+    .then((data) => {
+      return data;
+    })
+    .then((data) => {
+      return extractStructuredData(data);
+    })
+    .then((data) => {
+      console.log(data);
+    });
   
   return (
     <View style={styles.container}>
