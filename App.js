@@ -4,7 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import cheerio from 'react-native-cheerio';
 
 const requestPage = function(url) {
-  return fetch('https://cors-anywhere.herokuapp.com/' + url)
+  return fetch('https://cors-anywhere.herokuapp.com/' + url, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
     .then((response) => response.text())
     .then((data) => {
       return data;
@@ -21,8 +25,8 @@ const extractStructuredData = function(data) {
 
 export default function App() {
   const [recipeName, setRecipeName] = useState('Loading...');
-  const [recipeIngredients, setRecipeIngredients] = useState('Loading...');
-  const [recipeInstructions, setRecipeInstructions] = useState('Loading...');
+  const [recipeIngredients, setRecipeIngredients] = useState(['Loading...']);
+  const [recipeInstructions, setRecipeInstructions] = useState(['Loading...']);
 
   useEffect(() => {
     const extractRecipe = function(data) {
@@ -52,8 +56,20 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>{recipeName}</Text>
-      <Text>{recipeIngredients}</Text>
-      <Text>{recipeInstructions}</Text>
+      {
+        recipeIngredients.map((ingredient, key) => {
+          return (
+            <Text key={key}>{`\u2022 ${ingredient}`}</Text>
+          );
+        })
+      }
+      {
+        recipeInstructions.map((instruction, key) => {
+          return (
+            <Text key={key}>{`(${key + 1}) ${instruction}`}</Text>
+          );
+        })
+      }
       <StatusBar style="auto" />
     </View>
   );
