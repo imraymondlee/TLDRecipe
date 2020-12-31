@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, Platform } from 'react-native';
 import cheerio from 'react-native-cheerio';
+import ListSection from './components/ListSection';
 
 const requestPage = function(url) {
   return fetch('https://cors-anywhere.herokuapp.com/' + url, {
@@ -40,7 +41,7 @@ export default function App() {
       setRecipeInstructions(recipe.recipeInstructions.map(r => r.text));
     }
  
-    requestPage('https://www.gimmesomeoven.com/baked-chicken-breast/')
+    requestPage('https://natashaskitchen.com/pan-seared-steak/')
       .then((data) => {
         return data;
       })
@@ -54,32 +55,30 @@ export default function App() {
   }, []);
   
   return (
-    <View style={styles.container}>
-      <Text>{recipeName}</Text>
-      {
-        recipeIngredients.map((ingredient, key) => {
-          return (
-            <Text key={key}>{`\u2022 ${ingredient}`}</Text>
-          );
-        })
-      }
-      {
-        recipeInstructions.map((instruction, key) => {
-          return (
-            <Text key={key}>{`(${key + 1}) ${instruction}`}</Text>
-          );
-        })
-      }
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.droidSafeArea}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <Text style={styles.title}>{recipeName}</Text>
+          <ListSection heading="Ingredients" items={recipeIngredients} itemStyle="bullet" />
+          <ListSection heading="Instructions" items={recipeInstructions} itemStyle="number" />
+          <StatusBar style="auto" />
+        </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 25
+  },
+  title: {
+    marginBottom: 10,
+    fontSize: 20,
+    lineHeight: 25,
+    fontWeight: "bold"
+  },
+  droidSafeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? 45 : 0
   },
 });
