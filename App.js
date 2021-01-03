@@ -26,23 +26,25 @@ const extractStructuredData = function(data) {
 }
 
 export default function App() {
-  const [recipeName, setRecipeName] = useState('Loading...');
-  const [recipeIngredients, setRecipeIngredients] = useState(['Loading...']);
-  const [recipeInstructions, setRecipeInstructions] = useState(['Loading...']);
+  const [recipeName, setRecipeName] = useState();
+  const [recipeIngredients, setRecipeIngredients] = useState();
+  const [recipeInstructions, setRecipeInstructions] = useState();
+  const [recipeStatus, setRecipeStatus] = useState('none');   //none, loading, loaded, error
 
-  useEffect(() => {
-    const extractRecipe = function(data) {
-      let json = JSON.parse(data);
-      let recipe = json["@graph"].find(obj => {
-        return obj["@type"] === "Recipe"
-      });
-      // debugger;
-      setRecipeName(recipe.name);
-      setRecipeIngredients(recipe.recipeIngredient);
-      setRecipeInstructions(recipe.recipeInstructions.map(r => r.text));
-    }
- 
-    requestPage('https://natashaskitchen.com/pan-seared-steak/')
+  const extractRecipe = function(data) {
+    let json = JSON.parse(data);
+    let recipe = json["@graph"].find(obj => {
+      return obj["@type"] === "Recipe"
+    });
+    setRecipeName(recipe.name);
+    setRecipeIngredients(recipe.recipeIngredient);
+    setRecipeInstructions(recipe.recipeInstructions.map(r => r.text));
+    setRecipeStatus('loaded');
+  }
+
+  const loadRecipe = (url) => {
+    setRecipeStatus('loading');
+    requestPage(url)
       .then((data) => {
         return data;
       })
@@ -52,24 +54,33 @@ export default function App() {
       .then((data) => {
         extractRecipe(data);
       });
-
-  }, []);
+  }
   
   return (
     <SafeAreaView style={styles.droidSafeArea}>
-        <URLInput />
-        <ScrollView contentContainerStyle={styles.container}>
+      <URLInput loadRecipe={loadRecipe} />
+      {
+        (recipeStatus === 'loaded')
+        ?
+        <ScrollView contentContainerStyle={styles.recipeContainer}>
           <Text style={styles.title}>{recipeName}</Text>
           <ListSection heading="Ingredients" items={recipeIngredients} itemStyle="bullet" />
           <ListSection heading="Instructions" items={recipeInstructions} itemStyle="number" />
-          <StatusBar style="auto" />
         </ScrollView>
+        :(recipeStatus === 'loading')
+        ?<Text>Loading</Text>
+        :(recipeStatus === 'error')
+        ?<Text>Error</Text>
+        :<React.Fragment />
+      }
+
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  recipeContainer: {
     backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 25

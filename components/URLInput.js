@@ -5,7 +5,7 @@ export default function URLInput(props) {
   const [url, setURL] = useState('');
 
   const openURL = () => {
-    console.log('button pressed: ', url);
+    props.loadRecipe(url);
   }
 
   return (
@@ -21,7 +21,7 @@ export default function URLInput(props) {
         onPress={openURL}
       >
         <Text style={styles.buttonText}>Open</Text>
-      </TouchableOpacity >
+      </TouchableOpacity>
     </View>
   );
 }
