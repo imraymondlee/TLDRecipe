@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, SafeAreaView, Platform } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Platform } from 'react-native';
 import cheerio from 'react-native-cheerio';
 import ListSection from './components/ListSection';
+import URLInput from './components/URLInput';
 
 const requestPage = function(url) {
   return fetch('https://cors-anywhere.herokuapp.com/' + url, {
@@ -56,6 +57,7 @@ export default function App() {
   
   return (
     <SafeAreaView style={styles.droidSafeArea}>
+        <URLInput />
         <ScrollView contentContainerStyle={styles.container}>
           <Text style={styles.title}>{recipeName}</Text>
           <ListSection heading="Ingredients" items={recipeIngredients} itemStyle="bullet" />
@@ -69,7 +71,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    padding: 25
+    paddingVertical: 10,
+    paddingHorizontal: 25
   },
   title: {
     marginBottom: 10,
