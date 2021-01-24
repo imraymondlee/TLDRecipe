@@ -12,14 +12,22 @@ export default function ListSection(props) {
           ? <Text style={styles.listNumber}>{key + 1}</Text>
           : ""
         }
-        <Text style={styles.listText}>{item}</Text>
+        {
+          (props.isHowToSection) 
+          ? <Text style={styles.listText}>{item.text}</Text>
+          : <Text style={styles.listText}>{item}</Text>
+        }
       </View>
     );
   })
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>{props.heading}</Text>
+      {
+        props.heading &&
+        <Text style={props.isHowToSection ? styles.subHeading : styles.heading}>{props.heading}</Text>
+      }
+
       {list}
     </View>
   );
@@ -33,6 +41,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 16,
     fontWeight: "bold"
+  },
+  subHeading: {
+    marginBottom: 10,
+    fontSize: 16,
   },
   listItem: {
     flexDirection: 'row',

@@ -16,7 +16,7 @@ const requestPage = function(url) {
       return data;
     })
     .catch((error) => {
-      console.error(error);
+      console.error('Error requesting page: ', error);
     });
 }
 
@@ -28,6 +28,7 @@ const extractStructuredData = function(data) {
 export default function App() {
   const [recipeName, setRecipeName] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState();
+  const [recipeHowToSection, setRecipeHowToSection] = useState([]);
   const [recipeInstructions, setRecipeInstructions] = useState();
   const [recipeStatus, setRecipeStatus] = useState('none');   //none, loading, loaded, error
 
@@ -38,12 +39,20 @@ export default function App() {
     });
     setRecipeName(recipe.name);
     setRecipeIngredients(recipe.recipeIngredient);
-    setRecipeInstructions(recipe.recipeInstructions.map(r => r.text));
+
+    //check if recipe has HowToSection
+    if(recipe.recipeInstructions.some(obj => obj["@type"] === 'HowToSection')) {
+      setRecipeHowToSection(recipe.recipeInstructions);
+    } else {
+      setRecipeInstructions(recipe.recipeInstructions.map(r => r.text));
+    }
+
     setRecipeStatus('loaded');
   }
 
   const loadRecipe = (url) => {
     setRecipeStatus('loading');
+    //TODO: reset the states before loading new recipe
     requestPage(url)
       .then((data) => {
         return data;
@@ -53,8 +62,18 @@ export default function App() {
       })
       .then((data) => {
         extractRecipe(data);
+      })
+      .catch((error) => {
+        console.error('Error loading recipe: ', error);
+        setRecipeStatus('error');
       });
   }
+
+  const howToSections = recipeHowToSection.map((item, key) => {
+    return (
+      <ListSection key={key} heading={item.name} items={item.itemListElement} itemStyle="number" isHowToSection={true} />
+    );
+  })
   
   return (
     <SafeAreaView style={styles.droidSafeArea}>
@@ -65,7 +84,13 @@ export default function App() {
         <ScrollView contentContainerStyle={styles.recipeContainer}>
           <Text style={styles.title}>{recipeName}</Text>
           <ListSection heading="Ingredients" items={recipeIngredients} itemStyle="bullet" />
-          <ListSection heading="Instructions" items={recipeInstructions} itemStyle="number" />
+
+          <Text style={styles.heading}>Instructions</Text>
+          {
+            (recipeHowToSection.length > 0) 
+            ? howToSections
+            : <ListSection items={recipeInstructions} itemStyle="number" />
+          }
         </ScrollView>
         :(recipeStatus === 'loading')
         ?<Text>Loading</Text>
@@ -94,5 +119,10 @@ const styles = StyleSheet.create({
   droidSafeArea: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 45 : 0
+  },
+  heading: {
+    marginBottom: 10,
+    fontSize: 16,
+    fontWeight: "bold"
   },
 });
