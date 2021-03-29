@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Platform } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, Platform } from 'react-native';
 import cheerio from 'react-native-cheerio';
 import ListSection from './components/ListSection';
 import URLInput from './components/URLInput';
