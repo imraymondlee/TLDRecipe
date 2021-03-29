@@ -5,6 +5,7 @@ import cheerio from 'react-native-cheerio';
 import ListSection from './components/ListSection';
 import URLInput from './components/URLInput';
 
+//retrieving recipe website inputted
 const requestPage = function(url) {
   return fetch('https://cors-anywhere.herokuapp.com/' + url, {
       headers: {
@@ -20,6 +21,7 @@ const requestPage = function(url) {
     });
 }
 
+//takes HTML of the page to extract the structured data
 const extractStructuredData = function(data) {
   const $ = cheerio.load(data);
   return $('script[type="application/ld+json"]').contents()[0].data;
@@ -32,6 +34,7 @@ export default function App() {
   const [recipeInstructions, setRecipeInstructions] = useState();
   const [recipeStatus, setRecipeStatus] = useState('none');   //none, loading, loaded, error
 
+  //takes structured data to extract the recipe
   const extractRecipe = function(data) {
     let json = JSON.parse(data);
     let recipe = json["@graph"].find(obj => {
@@ -49,7 +52,7 @@ export default function App() {
 
     setRecipeStatus('loaded');
   }
-
+  
   const loadRecipe = (url) => {
     setRecipeStatus('loading');
     //TODO: reset the states before loading new recipe
@@ -69,6 +72,7 @@ export default function App() {
       });
   }
 
+  //render instruction sections. Each ListSection is a howToSection
   const howToSections = recipeHowToSection.map((item, key) => {
     return (
       <ListSection key={key} heading={item.name} items={item.itemListElement} itemStyle="number" isHowToSection={true} />

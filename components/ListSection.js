@@ -1,6 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
+/*
+Component for sections that present a list of items 
+(ingredients, single set of instructions, instructions with sections)
+*/
+
 export default function ListSection(props) {
   const list = props.items.map((item, key) => {
     return (
