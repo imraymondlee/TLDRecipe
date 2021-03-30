@@ -52,10 +52,17 @@ export default function App() {
 
     setRecipeStatus('loaded');
   }
+
+  const clearRecipe = () => {
+    setRecipeName();
+    setRecipeIngredients();
+    setRecipeHowToSection([]);
+    setRecipeInstructions();
+  }
   
   const loadRecipe = (url) => {
     setRecipeStatus('loading');
-    //TODO: reset the states before loading new recipe
+    clearRecipe();
     requestPage(url)
       .then((data) => {
         return data;
