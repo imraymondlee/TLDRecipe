@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, SafeAreaView, Platform } from 'react-native';
 import cheerio from 'react-native-cheerio';
+import Header from './components/Header';
 import ListSection from './components/ListSection';
 import URLInput from './components/URLInput';
 
@@ -88,6 +89,7 @@ export default function App() {
   
   return (
     <SafeAreaView style={styles.droidSafeArea}>
+      <Header />
       <URLInput loadRecipe={loadRecipe} />
       {
         (recipeStatus === 'loaded')
