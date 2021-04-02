@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Linking } from 'react-native';
 
-export default function Header() {
+export default function Header({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logoText}>TLDR<Text style={styles.logoTextInner}>ecipe</Text></Text>
+      <Text style={styles.logoText} onPress={() => navigation.navigate('Home')}>TLDR<Text style={styles.logoTextInner}>ecipe</Text></Text>
     </View>
   );
 }
