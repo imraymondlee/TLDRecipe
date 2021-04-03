@@ -29,6 +29,8 @@ const extractStructuredData = function(data) {
 }
 
 export default function RecipeScreen(props) {
+  const [url, setUrl] = useState('');
+
   const [recipeName, setRecipeName] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState();
   const [recipeHowToSection, setRecipeHowToSection] = useState([]);
@@ -80,6 +82,12 @@ export default function RecipeScreen(props) {
       });
   }
 
+  //populate the URL that is passed through route parameter and load recipe
+  useEffect(() => {
+    setUrl(props.route.params.url);
+    loadRecipe(props.route.params.url);
+  }, []);
+
   //render instruction sections. Each ListSection is a howToSection
   const howToSections = recipeHowToSection.map((item, key) => {
     return (
@@ -90,7 +98,8 @@ export default function RecipeScreen(props) {
   return (
     <View>
       <Header navigation={props.navigation} />
-      <URLInput loadRecipe={loadRecipe} />
+      {/* <URLInput navigation={props.navigation} /> */}
+      <URLInput navigation={props.navigation} url={url} setUrl={setUrl} />
       {
         (recipeStatus === 'loaded')
         ?

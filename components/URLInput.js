@@ -2,28 +2,32 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Linking } from 'react-native';
 
 export default function URLInput(props) {
-  const [url, setURL] = useState('');
+  // const [url, setURL] = useState('');
 
   const openURL = () => {
     props.loadRecipe(url);
   }
 
   const openOriginal = () => {
-    Linking.openURL(url);
+    Linking.openURL(props.url);
   }
 
   return (
     <View style={props.homeScreen ? styles.containerHome : styles.container }>
       <TextInput
         style={styles.input}
-        onChangeText={text => setURL(text)}
-        value={url}
+        onChangeText={text => props.setUrl(text)}
+        value={props.url}
         placeholder={'Recipe URL'}
       />
       <View style={styles.buttonView}>
         <TouchableOpacity 
           style={styles.button}
-          onPress={openURL}
+          onPress={() => {
+            props.navigation.push('Recipe', {
+              url: props.url,
+            });
+          }}
         >
           <Text style={styles.buttonText}>Open</Text>
         </TouchableOpacity>

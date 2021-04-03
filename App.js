@@ -18,7 +18,6 @@ const AppTheme = {
 };
 
 const App = () => {
-  
   return (
     <SafeAreaView style={styles.droidSafeArea}>
       <NavigationContainer theme={AppTheme}>

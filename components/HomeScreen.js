@@ -6,18 +6,19 @@ import URLInput from './URLInput';
 
 
 
-const HomeScreen = ({ navigation }) => {
-  
+const HomeScreen = (props) => {
+  const [url, setUrl] = useState('');
+
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} homeScreen={true} />
+      <Header navigation={props.navigation} homeScreen={true} />
       <Text style={styles.subtitle}>Just the information you need from the recipe.</Text>
       {/* <Button
         title="Go to Recipe"
         onPress={() => navigation.navigate('Recipe')}
       /> */}
 
-      <URLInput homeScreen={true} />
+      <URLInput navigation={props.navigation} homeScreen={true} url={url} setUrl={setUrl} />
     </View>
   );
 }
