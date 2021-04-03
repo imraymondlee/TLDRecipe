@@ -1,21 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Button, View } from 'react-native';
+import Header from './Header';
+import URLInput from './URLInput';
 
 
 
 const HomeScreen = ({ navigation }) => {
   
   return (
-    <View>
-      <Text>Hello World!</Text>
-      <Button
+    <View style={styles.container}>
+      <Header navigation={navigation} homeScreen={true} />
+      <Text style={styles.subtitle}>Just the information you need from the recipe.</Text>
+      {/* <Button
         title="Go to Recipe"
         onPress={() => navigation.navigate('Recipe')}
-      />
+      /> */}
+
+      <URLInput homeScreen={true} />
     </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    marginVertical: 'auto',
+  },
+  subtitle: {
+    marginVertical: 15,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#444034'
+  },
+});
 
 export default HomeScreen;

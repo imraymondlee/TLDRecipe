@@ -27,6 +27,7 @@ const App = () => {
           <Stack.Screen name="Recipe" component={RecipeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Linking } from 'react-native';
 
-export default function Header({ navigation }) {
+export default function Header(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logoText} onPress={() => navigation.navigate('Home')}>TLDR<Text style={styles.logoTextInner}>ecipe</Text></Text>
+      <Text style={props.homeScreen ? styles.logoTextHome : styles.logoText} onPress={() => props.navigation.navigate('Home')}>TLDR<Text style={styles.logoTextInner}>ecipe</Text></Text>
     </View>
   );
 }
@@ -21,7 +21,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ecc31f'
   },
+  logoTextHome: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#ecc31f'
+  },
   logoTextInner: {
     color: '#44380b'
   },
+
 });

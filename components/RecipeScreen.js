@@ -89,7 +89,7 @@ export default function RecipeScreen(props) {
   
   return (
     <View>
-      <Header navigation={props.navigation}/>
+      <Header navigation={props.navigation} />
       <URLInput loadRecipe={loadRecipe} />
       {
         (recipeStatus === 'loaded')
