@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Linking } from 'react-native';
 
 export default function URLInput(props) {
-  // const [url, setURL] = useState('');
-
-  const openURL = () => {
-    props.loadRecipe(url);
-  }
 
   const openOriginal = () => {
     Linking.openURL(props.url);
@@ -15,7 +10,7 @@ export default function URLInput(props) {
   return (
     <View style={props.homeScreen ? styles.containerHome : styles.container }>
       <TextInput
-        style={styles.input}
+        style={props.homeScreen ? styles.inputHome : styles.input}
         onChangeText={text => props.setUrl(text)}
         value={props.url}
         placeholder={'Recipe URL'}
@@ -47,7 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginVertical: 10,
-    marginHorizontal: 25
+    marginHorizontal: 15
   },
   containerHome: {
     flexDirection: 'row',
@@ -56,7 +51,15 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   input: {
-    flexBasis: '100%',
+    flex: 1,
+    marginBottom: 15,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: '#f2f2f2',
+    paddingHorizontal: 16,
+  },
+  inputHome: {
+    flexBasis: '95%',
     marginBottom: 15,
     height: 40,
     borderRadius: 10,

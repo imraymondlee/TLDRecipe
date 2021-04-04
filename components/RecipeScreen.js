@@ -1,4 +1,3 @@
-import { useLinkProps } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, View, Platform } from 'react-native';
 import cheerio from 'react-native-cheerio';
@@ -98,7 +97,6 @@ export default function RecipeScreen(props) {
   return (
     <View>
       <Header navigation={props.navigation} />
-      {/* <URLInput navigation={props.navigation} /> */}
       <URLInput navigation={props.navigation} url={url} setUrl={setUrl} />
       {
         (recipeStatus === 'loaded')
@@ -127,8 +125,9 @@ export default function RecipeScreen(props) {
 const styles = StyleSheet.create({
   recipeContainer: {
     backgroundColor: '#fff',
-    paddingVertical: 10,
-    paddingHorizontal: 25
+    paddingTop: 5,
+    paddingBottom: 150,
+    paddingHorizontal: 15
   },
   title: {
     marginBottom: 10,

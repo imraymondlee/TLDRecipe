@@ -12,12 +12,7 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.container}>
       <Header navigation={props.navigation} homeScreen={true} />
-      <Text style={styles.subtitle}>Just the information you need from the recipe.</Text>
-      {/* <Button
-        title="Go to Recipe"
-        onPress={() => navigation.navigate('Recipe')}
-      /> */}
-
+      <Text style={styles.subtitle}>Just the information you need from a recipe.</Text>
       <URLInput navigation={props.navigation} homeScreen={true} url={url} setUrl={setUrl} />
     </View>
   );
@@ -25,7 +20,9 @@ const HomeScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: 'auto',
   },
   subtitle: {
