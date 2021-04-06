@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, Linking } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
-export default function Header(props) {
+const Header = (props) => {
 
   return (
     <View style={styles.container}>
@@ -32,3 +32,5 @@ const styles = StyleSheet.create({
   },
 
 });
+
+export default Header;

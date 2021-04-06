@@ -6,7 +6,7 @@ Component for sections that present a list of items
 (ingredients, single set of instructions, instructions with sections)
 */
 
-export default function ListSection(props) {
+const ListSection = (props) => {
   const list = props.items.map((item, key) => {
     return (
       <View key={key} style={styles.listItem}>
@@ -73,3 +73,5 @@ const styles = StyleSheet.create({
     lineHeight: 24
   }
 });
+
+export default ListSection;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Linking } from 'react-native';
 
-export default function URLInput(props) {
+const URLInput = (props) => {
 
   const openOriginal = () => {
     Linking.openURL(props.url);
@@ -99,3 +99,5 @@ const styles = StyleSheet.create({
     color: '#44380b'
   }
 });
+
+export default URLInput;

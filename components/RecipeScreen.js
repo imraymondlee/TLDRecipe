@@ -6,7 +6,7 @@ import ListSection from './ListSection';
 import URLInput from './URLInput';
 
 //retrieving recipe website inputted
-const requestPage = function(url) {
+const requestPage = (url) => {
   return fetch('https://cors-anywhere.herokuapp.com/' + url, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest'
@@ -22,12 +22,12 @@ const requestPage = function(url) {
 }
 
 //takes HTML of the page to extract the structured data
-const extractStructuredData = function(data) {
+const extractStructuredData = (data) => {
   const $ = cheerio.load(data);
   return $('script[type="application/ld+json"]').contents()[0].data;
 }
 
-export default function RecipeScreen(props) {
+const RecipeScreen = (props) => {
   const [url, setUrl] = useState('');
 
   const [recipeName, setRecipeName] = useState();
@@ -148,3 +148,5 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   }
 });
+
+export default RecipeScreen;
