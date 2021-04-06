@@ -12,7 +12,7 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.container}>
       <Header navigation={props.navigation} homeScreen={true} />
-      <Text style={styles.subtitle}>Just the information you need from a recipe.</Text>
+      <Text style={styles.subtitle}>Just the information that you need from a recipe.</Text>
       <URLInput navigation={props.navigation} homeScreen={true} url={url} setUrl={setUrl} />
     </View>
   );

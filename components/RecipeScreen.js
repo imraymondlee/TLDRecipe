@@ -113,9 +113,9 @@ export default function RecipeScreen(props) {
           }
         </ScrollView>
         :(recipeStatus === 'loading')
-        ?<Text>Loading</Text>
+        ?<Text style={styles.recipeStatus}>Loading</Text>
         :(recipeStatus === 'error')
-        ?<Text>Error</Text>
+        ?<Text style={styles.recipeStatus}>Error loading the recipe</Text>
         :<React.Fragment />
       }
     </View>
@@ -144,4 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold"
   },
+  recipeStatus: {
+    alignSelf: 'center'
+  }
 });
